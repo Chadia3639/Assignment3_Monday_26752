@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import axios from "axios";
 import ClinicButton from "./ClinicButton";
 import { toast } from "react-toastify";
@@ -7,7 +7,12 @@ function Office({ onSave }) {
    const [officeName, setOfficeName] = useState("");
    const [officeNumber, setOfficeNumber] = useState("");
 
-   async function createAccount() {
+   function clearForm() {
+      setOfficeName("");
+      setOfficeNumber("");
+   }
+
+   async function saveOffice() {
       if (!officeName.trim()) {
          toast.error("Office name is required.");
          return;
@@ -17,16 +22,13 @@ function Office({ onSave }) {
          return;
       }
       try {
-         const response = await axios.post("http://localhost:8082/api/office/save", {
+         await axios.post("http://localhost:8082/api/office/save", {
             name: officeName,
             number: officeNumber
          });
-         if (response) {
-            toast.success("Office saved successfully!");
-            setOfficeName("");
-            setOfficeNumber("");
-            if (onSave) onSave();
-         }
+         toast.success("Office saved successfully!");
+         clearForm();
+         if (onSave) onSave();
       } catch (error) {
          toast.error("Failed to save office: " + error.message);
       }
@@ -41,7 +43,8 @@ function Office({ onSave }) {
          <label>Office Number: </label>
          <input type="text" value={officeNumber} onChange={(e) => setOfficeNumber(e.target.value)} />
          <br /><br />
-         <ClinicButton label="SAVE OFFICE" onClick={createAccount} />
+         <ClinicButton label="SAVE OFFICE" onClick={saveOffice} />
+         <ClinicButton label="CLEAR" onClick={clearForm} />
       </div>
    );
 }

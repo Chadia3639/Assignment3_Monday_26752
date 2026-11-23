@@ -21,7 +21,8 @@ const Offices = forwardRef((_, ref) => {
                 fetchAllOffices();
                 return;
             }
-            const response = await axios.get(`http://localhost:8082/api/office/search?search=${value}`);
+            const sanitized = encodeURIComponent(value);
+            const response = await axios.get(`http://localhost:8082/api/office/search?search=${sanitized}`);
             setOffices(response.data);
         } catch (error) {
             toast.error("Search failed: " + error.message);
@@ -29,6 +30,7 @@ const Offices = forwardRef((_, ref) => {
     };
 
     const deleteOffice = async (id) => {
+        if (!window.confirm("Are you sure you want to delete this office?")) return;
         try {
             await axios.delete(`http://localhost:8082/api/office/delete/${id}`);
             toast.success("Office deleted successfully!");
@@ -55,12 +57,12 @@ const Offices = forwardRef((_, ref) => {
     return (
         <div>
             <h1>Offices</h1>
-            <label>Search: </label>
             <input
                 type="text"
                 value={search}
                 onChange={handleSearch}
-                placeholder="Search by name or number"
+                placeholder="Search by ID, name or office number"
+                aria-label="Search offices"
             />
             <table border="1" cellPadding="8" style={{ marginTop: "20px", width: "100%", borderCollapse: "collapse" }}>
                 <thead>

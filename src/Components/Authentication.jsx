@@ -1,15 +1,12 @@
-import React from 'react'
-import React from 'react'
+import { useState } from 'react';
 
 function Authentication() {
 
-        const [userName, setUserName] = useState("");
+    const [userName, setUserName] = useState("");
     const [password, setPassword] = useState("");
-
     const [studentId, setStudentId] = useState("");
     const [email, setEmail] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
-
     const [doYouHaveAccount, setDoYouHaveAccount] = useState(true);
 
     const resetFields = () => {
@@ -51,7 +48,6 @@ function Authentication() {
             alert("Passwords do not match");
             return;
         }
-        // TODO: replace with your real account creation (API call / database)
         alert("Account created successfully! Please sign in.");
         showSignIn();
     };
@@ -62,22 +58,21 @@ function Authentication() {
                 <div style={{ border: "3px solid blue", marginTop: "200px" }}>
                     <h1>Sign In</h1>
                     <h3>Access your academic portal</h3>
-                    <label>UserName:</label>
                     <input
                         type="text"
                         value={userName}
                         onChange={e => setUserName(e.target.value)}
                         placeholder="Please enter your user name"
+                        aria-label="UserName"
                     /><br />
-                    <label>Password:</label>
                     <input
                         type="password"
                         value={password}
                         onChange={e => setPassword(e.target.value)}
+                        aria-label="Password"
                     /><br />
                     <div>
                         <button type="button" onClick={checkLogin}>LOGIN</button> <br />
-                        <label>New here?</label>
                         <button type="button" onClick={showCreateAccount}>Create an Account</button>
                     </div>
                 </div>
@@ -86,35 +81,34 @@ function Authentication() {
                     <div style={{ border: "3px solid indigo", marginTop: "200px" }}>
                         <h1>Create an Account</h1>
                         <h3>Access your academic portal</h3>
-                        <label>Student ID:</label>
                         <input
                             type="text"
                             value={studentId}
                             onChange={e => setStudentId(e.target.value)}
                             placeholder="Please enter your student ID"
+                            aria-label="Student ID"
                         /><br />
-                        <label>email:</label>
                         <input
                             type="email"
                             value={email}
                             onChange={e => setEmail(e.target.value)}
+                            aria-label="Email"
                         /><br />
-                        <label>password:</label>
                         <input
                             type="password"
                             value={password}
                             onChange={e => setPassword(e.target.value)}
+                            aria-label="Password"
                         /><br />
-                        <label>confirm:</label>
                         <input
                             type="password"
                             value={confirmPassword}
                             onChange={e => setConfirmPassword(e.target.value)}
+                            aria-label="Confirm Password"
                         /><br />
                         <div>
                             <button type="button" onClick={createAccount}>CREATE AN ACCOUNT</button> <br />
-                            <label>Already have an account?</label>
-                            <button type="button" onClick={showSignIn}>sign In</button>
+                            <button type="button" onClick={showSignIn}>Sign In</button>
                         </div>
                     </div>
                 </div>
@@ -123,4 +117,4 @@ function Authentication() {
     );
 }
 
-export default Authentication
+export default Authentication;
